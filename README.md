@@ -2,5 +2,7 @@
 
 Integrantes:
 -Gustavo Moreno Ojeda
+
 -Rodrigo Sulla Gonzales
--Wiliams Taipe Huanca
+
+-Wiliams Yeferson Taipe Huanca
