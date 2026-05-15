@@ -3,7 +3,7 @@
 Integrantes:
 
 
--Gustavo Moreno Ojeda
+-Gustavo Alonso Moreno Ojeda
 
 -Rodrigo Fredy Sulla Gonzales
 
