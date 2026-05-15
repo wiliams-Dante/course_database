@@ -5,6 +5,6 @@ Integrantes:
 
 -Gustavo Moreno Ojeda
 
--Rodrigo Sulla Gonzales
+-Rodrigo Fredy Sulla Gonzales
 
 -Wiliams Yeferson Taipe Huanca
