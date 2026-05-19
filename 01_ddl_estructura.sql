@@ -120,3 +120,11 @@ CREATE TABLE notificacion_pasajero (
     mensaje VARCHAR(500) NOT NULL,
     tarjeta_id CHAR(14) NOT NULL
 );
+
+
+CREATE TABLE historial_cambio_tarjeta (
+    cambio_id CHAR(14) PRIMARY KEY,
+    fecha_cambio TIMESTAMP NOT NULL,
+    motivo_cambio VARCHAR(500) NOT NULL,
+    tarjeta_id CHAR(14) NOT NULL
+);
