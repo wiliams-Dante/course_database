@@ -103,3 +103,12 @@ CREATE TABLE tipo_tarjeta (
     beneficio VARCHAR(30) NOT NULL,
     tarjeta_id CHAR(14) NOT NULL
 );
+
+CREATE TABLE bloqueo_tarjeta (
+    bloqueo_id CHAR(14) PRIMARY KEY,
+    fecha_bloqueo TIMESTAMP NOT NULL,
+    fecha_desbloqueo TIMESTAMP NOT NULL,
+    motivo VARCHAR(500) NOT NULL,
+    estado VARCHAR(30) NOT NULL,
+    tarjeta_id CHAR(14) NOT NULL
+);
