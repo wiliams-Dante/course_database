@@ -45,9 +45,17 @@ create table pasajero (
 CREATE TABLE tarjeta{
 	tarjeta_id CHAR(14) PRIMARY KEY,
 	fecha_emision TIMESTAMP NOT NULL,
+	fecha_caducidad TIMESTAMP NULL, 
 	saldo_actual INT NOT NULL,
 	estado_tarjeta VARCHAR(10) NOT NULL, 
 	pasajero_id VARCHAR(14) NOT NULL    
 
+};
+
+CREATE TABLE tarifa{
+	tarifa_id CHAR(14) PRIMARY KEY,
+	monto INT NOT NULL,
+	pasajero_id CHAR(14) NOT NULL,
+	tarjeta_id CHAR(14) NOT NULL	
 };
 
