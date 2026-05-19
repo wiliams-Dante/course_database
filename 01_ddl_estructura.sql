@@ -8,3 +8,9 @@ CREATE TABLE empresa (
 	placa_unidad VARCHAR(6) not null,
 	chofer_id CHAR(14) not null
 );
+
+CREATE TABLE ruta (
+	ruta_id CHAR(14) primary key,
+	nombre_ruta VARCHAR(50) not null,
+	empresa_ruc CHAR(20) not null
+)
