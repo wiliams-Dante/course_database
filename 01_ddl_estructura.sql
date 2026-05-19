@@ -78,3 +78,11 @@ CREATE TABLE reporte_ingresos (
 	empresa_ruc CHAR(14) NOT NULL,
 	tarifa_id CHAR(14) NOT NULL
 ); 
+
+CREATE TABLE tipo_usuario(
+	tipo_id CHAR(14) PRIMARY KEY,
+	nombre VARCHAR(30) NULL,
+	descuento_porcentaje INT NOT NULL,
+	tarjeta_id CHAR(14) NOT NULL
+
+);
