@@ -67,8 +67,8 @@ CREATE TABLE transaccion (
 	pasajero_id CHAR(14) NOT NULL,
 	tarjeta_id CHAR(14) NOT NULL,
 	tarifa_id CHAR(14) NOT NULL 
-
 );
+
 
 CREATE TABLE reporte_ingresos (
 	reporte_id CHAR(14) PRIMARY KEY,
@@ -84,5 +84,13 @@ CREATE TABLE tipo_usuario(
 	nombre VARCHAR(30) NULL,
 	descuento_porcentaje INT NOT NULL,
 	tarjeta_id CHAR(14) NOT NULL
+);
 
+
+CREATE TABLE incidencia (
+    incidencia_id CHAR(14) PRIMARY KEY,
+    fecha_reporte TIMESTAMP NOT NULL,
+    descripcion VARCHAR(500) NULL,
+    estado VARCHAR(30) NOT NULL,
+    tarjeta_id CHAR(14) NOT NULL
 );
