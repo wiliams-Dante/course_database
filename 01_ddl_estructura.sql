@@ -34,3 +34,9 @@ CREATE TABLE chofer(
     chofer_id CHAR(14) not null,
     ruta_id CHAR(14) not null
 )
+
+create table pasajero (
+	pasajero_id CHAR(14) primary key,
+	dni_pasajero CHAR(8) not null unique,
+	telefono_pasajero VARCHAR(15) not null
+);
