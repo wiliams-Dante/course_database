@@ -42,7 +42,7 @@ create table pasajero (
 );
 
 
-CREATE TABLE tarjeta{
+CREATE TABLE tarjeta(
 	tarjeta_id CHAR(14) PRIMARY KEY,
 	fecha_emision TIMESTAMP NOT NULL,
 	fecha_caducidad TIMESTAMP NULL, 
@@ -50,16 +50,16 @@ CREATE TABLE tarjeta{
 	estado_tarjeta VARCHAR(10) NOT NULL, 
 	pasajero_id VARCHAR(14) NOT NULL    
 
-};
+);
 
-CREATE TABLE tarifa{
+CREATE TABLE tarifa(
 	tarifa_id CHAR(14) PRIMARY KEY,
 	monto INT NOT NULL,
 	pasajero_id CHAR(14) NOT NULL,
 	tarjeta_id CHAR(14) NOT NULL	
-};
+);
 
-CREATE TABLE transaccion {
+CREATE TABLE transaccion (
 	transaccion_id CHAR(14) PRIMARY KEY,
 	monto_tr INT NOT NULL,
 	fecha_hora_tr TIMESTAMP NOT NULL,
@@ -68,4 +68,13 @@ CREATE TABLE transaccion {
 	tarjeta_id CHAR(14) NOT NULL,
 	tarifa_id CHAR(14) NOT NULL 
 
-};
+);
+
+CREATE TABLE reporte_ingresos (
+	reporte_id CHAR(14) PRIMARY KEY,
+	fecha_reporte TIMESTAMP NOT NULL,
+	total_ingresos INT NOT NULL,
+	total_transacciones INT NOT NULL,
+	empresa_ruc CHAR(14) NOT NULL,
+	tarifa_id CHAR(14) NOT NULL
+); 
