@@ -24,3 +24,13 @@ CREATE TABLE unidad (
     chofer_id CHAR(14) not null,
     ruta_id CHAR(14) not null
 );
+
+CREATE TABLE chofer(
+	chofer_id CHAR(14) primary key,
+	modelo_unidad VARCHAR(30) null,
+    capacidad_psjros INT not null,
+    estado_operativo VARCHAR(10) not null,
+    empresa_ruc CHAR(20) not null,
+    chofer_id CHAR(14) not null,
+    ruta_id CHAR(14) not null
+)
