@@ -59,3 +59,13 @@ CREATE TABLE tarifa{
 	tarjeta_id CHAR(14) NOT NULL	
 };
 
+CREATE TABLE transaccion {
+	transaccion_id CHAR(14) PRIMARY KEY,
+	monto_tr INT NOT NULL,
+	fecha_hora_tr TIMESTAMP NOT NULL,
+	estado_tr VARCHAR(30) NOT NULL,
+	pasajero_id CHAR(14) NOT NULL,
+	tarjeta_id CHAR(14) NOT NULL,
+	tarifa_id CHAR(14) NOT NULL 
+
+};
