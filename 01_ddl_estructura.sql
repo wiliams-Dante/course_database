@@ -112,3 +112,11 @@ CREATE TABLE bloqueo_tarjeta (
     estado VARCHAR(30) NOT NULL,
     tarjeta_id CHAR(14) NOT NULL
 );
+
+CREATE TABLE notificacion_pasajero (
+    notificacion_id CHAR(14) PRIMARY KEY,
+    fecha TIMESTAMP NOT NULL,
+    tipo VARCHAR(20) NOT NULL,
+    mensaje VARCHAR(500) NOT NULL,
+    tarjeta_id CHAR(14) NOT NULL
+);
