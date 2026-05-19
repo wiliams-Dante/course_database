@@ -94,3 +94,12 @@ CREATE TABLE incidencia (
     estado VARCHAR(30) NOT NULL,
     tarjeta_id CHAR(14) NOT NULL
 );
+
+
+CREATE TABLE tipo_tarjeta (
+    recarga_id CHAR(14) PRIMARY KEY,
+    prepago VARCHAR(10) NOT NULL,
+    postpago VARCHAR(10) NOT NULL,
+    beneficio VARCHAR(30) NOT NULL,
+    tarjeta_id CHAR(14) NOT NULL
+);
