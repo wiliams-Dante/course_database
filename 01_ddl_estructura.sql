@@ -40,3 +40,14 @@ create table pasajero (
 	dni_pasajero CHAR(8) not null unique,
 	telefono_pasajero VARCHAR(15) not null
 );
+
+
+CREATE TABLE tarjeta{
+	tarjeta_id CHAR(14) PRIMARY KEY,
+	fecha_emision TIMESTAMP NOT NULL,
+	saldo_actual INT NOT NULL,
+	estado_tarjeta VARCHAR(10) NOT NULL, 
+	pasajero_id VARCHAR(14) NOT NULL    
+
+};
+
