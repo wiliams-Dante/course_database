@@ -43,3 +43,12 @@ VALUES
 ('TUS00000000003', 'General', 0, 'TRJ00000000003'),
 ('TUS00000000004', 'General', 0, 'TRJ00000000004'),
 ('TUS00000000005', 'Tercera Edad', 50, 'TRJ00000000005');
+
+
+INSERT INTO incidencia (incidencia_id, fecha_reporte, descripcion, estado, tarjeta_id) 
+VALUES 
+('INC00000000001', '2026-05-20 10:00:00', 'Perdida de tarjeta en paradero', 'Pendiente', 'TRJ00000000003'),
+('INC00000000002', '2026-05-21 11:30:00', 'Cobro doble en el validador', 'Resuelto', 'TRJ00000000001'),
+('INC00000000003', '2026-05-22 15:45:00', 'Robo de billetera', 'Pendiente', 'TRJ00000000005'),
+('INC00000000004', '2026-05-23 09:20:00', 'Tarjeta no lee en la maquina', 'En Revision', 'TRJ00000000004'),
+('INC00000000005', '2026-05-24 08:10:00', 'Recarga no reflejada en saldo', 'Resuelto', 'TRJ00000000002');
