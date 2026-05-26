@@ -88,3 +88,9 @@ WHERE tarjeta_id = 'TRJ00000000004';
 UPDATE incidencia 
 SET estado = 'Resuelto' 
 WHERE incidencia_id = 'INC00000000001';
+
+
+/* UPDATE extra realizado por: Gustavo Alonso Moreno Ojeda */
+UPDATE transaccion 
+SET estado_tr = 'Anulada' 
+WHERE transaccion_id = 'TRN00000000005';
