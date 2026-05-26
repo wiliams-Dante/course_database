@@ -77,6 +77,10 @@ UPDATE pasajero
 SET telefono_pasajero = '987654321' 
 WHERE pasajero_id = 'PSJ00000000001';
 
+/* UPDATE realizado por: Gustavo Alonso Moreno Ojeda*/
+UPDATE tarjeta 
+SET estado_tarjeta = 'Inactiva' 
+WHERE tarjeta_id = 'TRJ00000000004';
 
 
 
