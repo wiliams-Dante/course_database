@@ -63,7 +63,13 @@ VALUES
 ('NOT00000000005', '2026-05-24 08:15:00', 'Recarga', 'Su recarga ha sido procesada con exito', 'TRJ00000000002');
 
 
-
+INSERT INTO historial_cambio_tarjeta (cambio_id, fecha_cambio, motivo_cambio, tarjeta_id) 
+VALUES 
+('HST00000000001', '2026-01-15 08:35:00', 'Emision de nueva tarjeta', 'TRJ00000000001'),
+('HST00000000002', '2026-02-20 10:20:00', 'Emision de nueva tarjeta', 'TRJ00000000002'),
+('HST00000000003', '2026-05-20 10:30:00', 'Desactivacion temporal por perdida', 'TRJ00000000003'),
+('HST00000000004', '2026-04-05 09:05:00', 'Renovacion de tarjeta', 'TRJ00000000004'),
+('HST00000000005', '2026-05-22 16:00:00', 'Bloqueo definitivo por robo', 'TRJ00000000005');
 
 
 
