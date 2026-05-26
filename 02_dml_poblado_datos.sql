@@ -72,7 +72,10 @@ VALUES
 ('HST00000000005', '2026-05-22 16:00:00', 'Bloqueo definitivo por robo', 'TRJ00000000005');
 
 
-
+/* UPDATE realizado por: Rodrigo Fredy Sulla Gonzales*/
+UPDATE pasajero 
+SET telefono_pasajero = '987654321' 
+WHERE pasajero_id = 'PSJ00000000001';
 
 
 
