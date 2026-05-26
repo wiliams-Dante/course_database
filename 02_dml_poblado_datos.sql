@@ -52,3 +52,22 @@ VALUES
 ('INC00000000003', '2026-05-22 15:45:00', 'Robo de billetera', 'Pendiente', 'TRJ00000000005'),
 ('INC00000000004', '2026-05-23 09:20:00', 'Tarjeta no lee en la maquina', 'En Revision', 'TRJ00000000004'),
 ('INC00000000005', '2026-05-24 08:10:00', 'Recarga no reflejada en saldo', 'Resuelto', 'TRJ00000000002');
+
+
+INSERT INTO notificacion_pasajero (notificacion_id, fecha, tipo, mensaje, tarjeta_id) 
+VALUES 
+('NOT00000000001', '2026-05-20 10:05:00', 'Alerta', 'Su tarjeta ha sido bloqueada temporalmente', 'TRJ00000000003'),
+('NOT00000000002', '2026-05-21 11:35:00', 'Reembolso', 'Se ha devuelto el saldo por cobro doble', 'TRJ00000000001'),
+('NOT00000000003', '2026-05-22 15:50:00', 'Bloqueo', 'Tarjeta bloqueada por reporte de robo', 'TRJ00000000005'),
+('NOT00000000004', '2026-05-23 09:25:00', 'Info', 'Acuda a un centro de atencion para revision de tarjeta', 'TRJ00000000004'),
+('NOT00000000005', '2026-05-24 08:15:00', 'Recarga', 'Su recarga ha sido procesada con exito', 'TRJ00000000002');
+
+
+
+
+
+
+
+
+
+
