@@ -84,3 +84,7 @@ WHERE tarjeta_id = 'TRJ00000000004';
 
 
 
+/* UPDATE realizado por: Wiliams Yeferson Taipe Huanca */
+UPDATE incidencia 
+SET estado = 'Resuelto' 
+WHERE incidencia_id = 'INC00000000001';
