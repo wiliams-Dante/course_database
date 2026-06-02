@@ -3,11 +3,11 @@
 Integrantes:
 
 
--Gustavo Alonso Moreno Ojeda
+-Gustavo Alonso Moreno Ojeda (TavoGus0117)
 
--Rodrigo Fredy Sulla Gonzales
+-Rodrigo Fredy Sulla Gonzales (Fulanito0410)
 
--Wiliams Yeferson Taipe Huanca
+-Wiliams Yeferson Taipe Huanca (William-Dante)
 
 
 ## Entidades del Sistema
