@@ -157,3 +157,10 @@ ALTER TABLE transaccion
 
 ALTER TABLE transaccion 
     ADD CONSTRAINT fk_transaccion_tarifa FOREIGN KEY (tarifa_id) REFERENCES tarifa(tarifa_id);
+
+/*Conectar REPORTE DE INGRESOS con la EMPRESA y la TARIFA analizada*/
+ALTER TABLE reporte_ingresos 
+    ADD CONSTRAINT fk_reporte_empresa FOREIGN KEY (empresa_ruc) REFERENCES empresa(ruc);
+
+ALTER TABLE reporte_ingresos 
+    ADD CONSTRAINT fk_reporte_tarifa FOREIGN KEY (tarifa_id) REFERENCES tarifa(tarifa_id);
