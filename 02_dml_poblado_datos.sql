@@ -100,3 +100,6 @@ ALTER TABLE empresa ALTER COLUMN ruc TYPE CHAR(20);
 ALTER TABLE ruta ALTER COLUMN empresa_ruc TYPE CHAR(20);
 ALTER TABLE unidad ALTER COLUMN empresa_ruc TYPE CHAR(20);
 ALTER TABLE reporte_ingresos ALTER COLUMN empresa_ruc TYPE CHAR(20);
+
+-- Reparando el tipo de dato de pasajero_id en la tabla tarjeta
+ALTER TABLE tarjeta ALTER COLUMN pasajero_id TYPE CHAR(14);
