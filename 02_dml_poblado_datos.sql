@@ -114,3 +114,6 @@ ALTER TABLE unidad
 
 ALTER TABLE unidad 
     ADD CONSTRAINT fk_unidad_ruta FOREIGN KEY (ruta_id) REFERENCES ruta(ruta_id);
+
+ALTER TABLE unidad 
+    ADD CONSTRAINT fk_unidad_chofer FOREIGN KEY (chofer_id) REFERENCES chofer(chofer_id);
