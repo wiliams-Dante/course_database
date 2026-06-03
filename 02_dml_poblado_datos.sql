@@ -147,3 +147,13 @@ ALTER TABLE tarifa
 
 ALTER TABLE tarifa 
     ADD CONSTRAINT fk_tarifa_tarjeta FOREIGN KEY (tarjeta_id) REFERENCES tarjeta(tarjeta_id);
+
+/*Conectar TRANSACCION con sus tres entidades originarias*/
+ALTER TABLE transaccion 
+    ADD CONSTRAINT fk_transaccion_pasajero FOREIGN KEY (pasajero_id) REFERENCES pasajero(pasajero_id);
+
+ALTER TABLE transaccion 
+    ADD CONSTRAINT fk_transaccion_tarjeta FOREIGN KEY (tarjeta_id) REFERENCES tarjeta(tarjeta_id);
+
+ALTER TABLE transaccion 
+    ADD CONSTRAINT fk_transaccion_tarifa FOREIGN KEY (tarifa_id) REFERENCES tarifa(tarifa_id);
