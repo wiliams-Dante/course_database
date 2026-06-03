@@ -94,3 +94,9 @@ WHERE incidencia_id = 'INC00000000001';
 UPDATE transaccion 
 SET estado_tr = 'Anulada' 
 WHERE transaccion_id = 'TRN00000000005';
+
+-- Reparando tamaños de RUC para que todos sean CHAR(20)
+ALTER TABLE empresa ALTER COLUMN ruc TYPE CHAR(20);
+ALTER TABLE ruta ALTER COLUMN empresa_ruc TYPE CHAR(20);
+ALTER TABLE unidad ALTER COLUMN empresa_ruc TYPE CHAR(20);
+ALTER TABLE reporte_ingresos ALTER COLUMN empresa_ruc TYPE CHAR(20);
