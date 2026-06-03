@@ -107,3 +107,7 @@ ALTER TABLE tarjeta ALTER COLUMN pasajero_id TYPE CHAR(14);
 /* Conectar RUTA con EMPRESA*/
 ALTER TABLE ruta 
     ADD CONSTRAINT fk_ruta_empresa FOREIGN KEY (empresa_ruc) REFERENCES empresa(ruc);
+
+/*Conectar UNIDAD con EMPRESA, RUTA y CHOFER*/
+ALTER TABLE unidad 
+    ADD CONSTRAINT fk_unidad_empresa FOREIGN KEY (empresa_ruc) REFERENCES empresa(ruc);
