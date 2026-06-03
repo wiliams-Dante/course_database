@@ -121,3 +121,22 @@ ALTER TABLE unidad
 /*Conectar TARJETA con PASAJERO*/
 ALTER TABLE tarjeta 
     ADD CONSTRAINT fk_tarjeta_pasajero FOREIGN KEY (pasajero_id) REFERENCES pasajero(pasajero_id);
+
+/*Conectar los subtipos y estados a la TARJETA*/
+ALTER TABLE tipo_tarjeta 
+    ADD CONSTRAINT fk_tipo_tarjeta_ref FOREIGN KEY (tarjeta_id) REFERENCES tarjeta(tarjeta_id);
+
+ALTER TABLE tipo_usuario 
+    ADD CONSTRAINT fk_tipo_usuario_ref FOREIGN KEY (tarjeta_id) REFERENCES tarjeta(tarjeta_id);
+
+ALTER TABLE bloqueo_tarjeta 
+    ADD CONSTRAINT fk_bloqueo_tarjeta_ref FOREIGN KEY (tarjeta_id) REFERENCES tarjeta(tarjeta_id);
+
+ALTER TABLE notificacion_pasajero 
+    ADD CONSTRAINT fk_notificacion_tarjeta FOREIGN KEY (tarjeta_id) REFERENCES tarjeta(tarjeta_id);
+
+ALTER TABLE historial_cambio_tarjeta 
+    ADD CONSTRAINT fk_historial_tarjeta FOREIGN KEY (tarjeta_id) REFERENCES tarjeta(tarjeta_id);
+
+ALTER TABLE incidencia 
+    ADD CONSTRAINT fk_incidencia_tarjeta FOREIGN KEY (tarjeta_id) REFERENCES tarjeta(tarjeta_id);
