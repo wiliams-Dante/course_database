@@ -111,3 +111,6 @@ ALTER TABLE ruta
 /*Conectar UNIDAD con EMPRESA, RUTA y CHOFER*/
 ALTER TABLE unidad 
     ADD CONSTRAINT fk_unidad_empresa FOREIGN KEY (empresa_ruc) REFERENCES empresa(ruc);
+
+ALTER TABLE unidad 
+    ADD CONSTRAINT fk_unidad_ruta FOREIGN KEY (ruta_id) REFERENCES ruta(ruta_id);
