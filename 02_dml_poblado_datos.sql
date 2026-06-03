@@ -140,3 +140,10 @@ ALTER TABLE historial_cambio_tarjeta
 
 ALTER TABLE incidencia 
     ADD CONSTRAINT fk_incidencia_tarjeta FOREIGN KEY (tarjeta_id) REFERENCES tarjeta(tarjeta_id);
+
+/*Conectar TARIFA con PASAJERO y TARJETA*/
+ALTER TABLE tarifa 
+    ADD CONSTRAINT fk_tarifa_pasajero FOREIGN KEY (pasajero_id) REFERENCES pasajero(pasajero_id);
+
+ALTER TABLE tarifa 
+    ADD CONSTRAINT fk_tarifa_tarjeta FOREIGN KEY (tarjeta_id) REFERENCES tarjeta(tarjeta_id);
