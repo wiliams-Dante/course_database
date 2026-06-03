@@ -117,3 +117,7 @@ ALTER TABLE unidad
 
 ALTER TABLE unidad 
     ADD CONSTRAINT fk_unidad_chofer FOREIGN KEY (chofer_id) REFERENCES chofer(chofer_id);
+
+/*Conectar TARJETA con PASAJERO*/
+ALTER TABLE tarjeta 
+    ADD CONSTRAINT fk_tarjeta_pasajero FOREIGN KEY (pasajero_id) REFERENCES pasajero(pasajero_id);
