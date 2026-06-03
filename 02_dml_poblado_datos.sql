@@ -101,5 +101,9 @@ ALTER TABLE ruta ALTER COLUMN empresa_ruc TYPE CHAR(20);
 ALTER TABLE unidad ALTER COLUMN empresa_ruc TYPE CHAR(20);
 ALTER TABLE reporte_ingresos ALTER COLUMN empresa_ruc TYPE CHAR(20);
 
--- Reparando el tipo de dato de pasajero_id en la tabla tarjeta
+/* Reparando el tipo de dato de pasajero_id en la tabla tarjeta*/
 ALTER TABLE tarjeta ALTER COLUMN pasajero_id TYPE CHAR(14);
+
+/* Conectar RUTA con EMPRESA*/
+ALTER TABLE ruta 
+    ADD CONSTRAINT fk_ruta_empresa FOREIGN KEY (empresa_ruc) REFERENCES empresa(ruc);
