@@ -5,7 +5,7 @@ Integrantes:
 
 -Gustavo Alonso Moreno Ojeda (TavoGus0117)
 
--Rodrigo Fredy Sulla Gonzales (Fulanito0410)
+-Rodrigo Fredy Sulla Gonzales (Fulanito0410) (RodrigoSulla)
 
 -Wiliams Yeferson Taipe Huanca (William-Dante)
 
