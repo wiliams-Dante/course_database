@@ -5,12 +5,11 @@ const { Parser } = require('json2csv');
 
 const app = express();
 
-// Permite que el frontend se conecte sin problemas de seguridad (CORS)
+// Permite que el frontend se conecte sin problemas de seguridad
 app.use(cors());
 app.use(express.json());
 
-// 1. Configuración de conexión a PostgreSQL
-// ¡IMPORTANTE!: Cambia 'tu_contraseña' y 'nombre_de_tu_bd' por los datos reales de tu pgAdmin
+//Configuración de conexión a PostgreSQL
 const pool = new Pool({
     user: 'postgres',
     host: 'localhost',
@@ -24,7 +23,7 @@ app.get('/', (req, res) => {
     res.send('API del Sistema de Transporte funcionando OK');
 });
 
-// 2. Ruta para obtener los pasajeros (Para mostrarlos en el frontend básico)
+//Ruta para obtener los pasajeros
 app.get('/api/pasajeros', async (req, res) => {
     try {
         const result = await pool.query('SELECT * FROM pasajero');
@@ -35,7 +34,7 @@ app.get('/api/pasajeros', async (req, res) => {
     }
 });
 
-// 3. Ruta para descargar el CSV de transacciones (Lo que pidió la profesora)
+//Ruta para descargar el CSV de transacciones 
 app.get('/api/transacciones/csv', async (req, res) => {
     try {
         const result = await pool.query('SELECT * FROM transaccion');
@@ -46,7 +45,7 @@ app.get('/api/transacciones/csv', async (req, res) => {
         }
 
         // Convertir el JSON a formato CSV
-        const json2csvParser = new Parser();
+        const json2csvParser = new Parser({ delimiter: ';', withBOM: true });
         const csv = json2csvParser.parse(transacciones);
 
         // Configurar los encabezados de respuesta para forzar la descarga del archivo
