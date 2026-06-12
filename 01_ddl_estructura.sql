@@ -13,7 +13,7 @@ CREATE TABLE ruta (
 	ruta_id CHAR(14) primary key,
 	nombre_ruta VARCHAR(50) not null,
 	empresa_ruc CHAR(20) not null
-)
+);
 
 CREATE TABLE unidad (
     placa VARCHAR(6) primary key,
@@ -33,7 +33,7 @@ CREATE TABLE chofer(
     empresa_ruc CHAR(20) not null,
     chofer_id CHAR(14) not null,
     ruta_id CHAR(14) not null
-)
+);
 
 create table pasajero (
 	pasajero_id CHAR(14) primary key,

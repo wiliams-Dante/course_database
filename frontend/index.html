@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Transporte - Entrega 1</title>
+    <style>
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            margin: 40px; 
+            background-color: #f4f7f6; 
+        }
+        .container { 
+            max-width: 800px; 
+            margin: 0 auto; 
+            background: white; 
+            padding: 20px; 
+            border-radius: 8px; 
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1); 
+        }
+        h1 { color: #333; }
+        .btn { 
+            padding: 10px 15px; 
+            border: none; 
+            border-radius: 5px; 
+            cursor: pointer; 
+            color: white; 
+            font-size: 16px; 
+            margin-right: 10px; 
+            transition: 0.3s;
+        }
+        .btn-csv { background-color: #28a745; }
+        .btn-csv:hover { background-color: #218838; }
+        .btn-load { background-color: #007bff; }
+        .btn-load:hover { background-color: #0069d9; }
+        table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            margin-top: 20px; 
+        }
+        th, td { 
+            border: 1px solid #ddd; 
+            padding: 12px; 
+            text-align: left; 
+        }
+        th { background-color: #343a40; color: white; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Sistema de Transporte - Control de Base de Datos</h1>
+        
+        <button class="btn btn-csv" onclick="descargarCSV()"> Descargar Reporte CSV</button>
+        <button class="btn btn-load" onclick="cargarPasajeros()"> Ver Tabla de Pasajeros</button>
+
+        <table id="tabla">
+            <thead>
+                <tr>
+                    <th>ID Pasajero</th>
+                    <th>DNI</th>
+                    <th>Teléfono</th>
+                </tr>
+            </thead>
+            <tbody id="datos-body">
+                <tr>
+                    <td colspan="3" style="text-align: center; color: #777;">Haz clic en "Ver Tabla de Pasajeros" para cargar los datos de la base de datos</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // 1. Función para descargar el CSV llamando a la ruta del backend
+        function descargarCSV() {
+            window.open('http://localhost:3000/api/transacciones/csv', '_blank');
+        }
+
+        // 2. Función para obtener los datos de Postgres y pintarlos en la tabla HTML
+        async function cargarPasajeros() {
+            try {
+                // Se conecta a tu servidor Node.js
+                const respuesta = await fetch('http://localhost:3000/api/pasajeros');
+                const pasajeros = await respuesta.json();
+                
+                const tbody = document.getElementById('datos-body');
+                tbody.innerHTML = ''; // Limpiar el mensaje inicial
+                
+                // Recorrer los datos e inyectarlos en la tabla
+                pasajeros.forEach(p => {
+                    const fila = document.createElement('tr');
+                    fila.innerHTML = `
+                        <td>${p.pasajero_id}</td>
+                        <td>${p.dni_pasajero}</td>
+                        <td>${p.telefono_pasajero}</td>
+                    `;
+                    tbody.appendChild(fila);
+                });
+            } catch (error) {
+                alert('🚨 Error: No se pudo conectar al backend. ¿Aseguraste que node index.js esté corriendo?');
+                console.error(error);
+            }
+        }
+    </script>
+</body>
+</html>
