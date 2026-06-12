@@ -58,7 +58,7 @@
 
         <div class="grid-2">
             <div class="card">
-                <h3>🔍 Buscar Transacciones</h3>
+                <h3>Buscar Transacciones</h3>
                 <div class="form-group">
                     <label for="id_busqueda">ID del Pasajero</label>
                     <input type="text" id="id_busqueda" class="form-control" placeholder="Ej: PSJ00000000001">
@@ -67,7 +67,7 @@
             </div>
 
             <div class="card">
-                <h3>👤 Registrar Nuevo Pasajero</h3>
+                <h3> Registrar Nuevo Pasajero</h3>
                 <form id="formAgregar" onsubmit="agregarPasajero(event)">
                     <div class="form-group">
                         <label for="nuevo_id">ID Pasajero</label>
@@ -81,15 +81,15 @@
                         <label for="nuevo_telefono">Teléfono</label>
                         <input type="text" id="nuevo_telefono" class="form-control" placeholder="Ej: 999888777" required>
                     </div>
-                    <button type="submit" class="btn btn-primary w-100">➕ Guardar en BD</button>
+                    <button type="submit" class="btn btn-primary w-100">Guardar en BD</button>
                 </form>
             </div>
 
             <div class="card full-width">
-                <h3>👥 Vista General de Pasajeros</h3>
+                <h3> Vista General de Pasajeros</h3>
                 <div class="btn-group">
-                    <button class="btn btn-dark" onclick="cargarPasajeros()">🔄 Ver / Actualizar Tabla</button>
-                    <button class="btn btn-success" onclick="descargarCSVGeneral()">📥 Descargar Toda la BD (Excel)</button>
+                    <button class="btn btn-dark" onclick="cargarPasajeros()">Ver / Actualizar Tabla</button>
+                    <button class="btn btn-success" onclick="descargarCSVGeneral()">Descargar Toda la BD (Excel)</button>
                 </div>
                 
                 <table>
@@ -114,7 +114,7 @@
         // Descarga por ID específico
         function descargarCSV() {
             const id = document.getElementById('id_busqueda').value;
-            if(!id) { alert("⚠️ Por favor, ingresa el ID del pasajero primero."); return; }
+            if(!id) { alert("Por favor, ingresa el ID del pasajero primero."); return; }
             window.open(`http://localhost:3000/api/transacciones/csv/${id}`, '_blank');
         }
 
@@ -138,7 +138,7 @@
                     tbody.appendChild(fila);
                 });
             } catch (error) {
-                alert('🚨 Error conectando con la BD.');
+                alert('Error conectando con la BD.');
                 console.error(error);
             }
         }
@@ -158,15 +158,15 @@
                 });
 
                 if (respuesta.ok) {
-                    alert("✅ ¡Pasajero guardado exitosamente!");
+                    alert(" Pasajero guardado exitosamente!");
                     document.getElementById('formAgregar').reset();
-                    // Esto hace la magia: recarga la tabla sola después de guardar
+                    //recarga la tabla sola después de guardar
                     cargarPasajeros(); 
                 } else {
-                    alert("❌ Error: Verifica que el ID o DNI no estén repetidos.");
+                    alert("Error: Verifica que el ID o DNI no estén repetidos.");
                 }
             } catch (error) {
-                alert("🚨 Error conectando con el servidor. ¿Está encendido el backend?");
+                alert("Error conectando con el servidor. ¿Está encendido el backend?");
             }
         }
     </script>
