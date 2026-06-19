@@ -159,3 +159,10 @@ ALTER TABLE reporte_ingresos
 ALTER TABLE bloqueo_tarjeta 
     DROP CONSTRAINT fk_bloqueo_tarjeta_ref,
     ADD CONSTRAINT fk_bloqueo_tarjeta_ref FOREIGN KEY (tarjeta_id) REFERENCES tarjeta(tarjeta_id) ON DELETE CASCADE;
+
+
+-- ahora el mismo proceso para las notificaciones
+ALTER TABLE notificacion_pasajero 
+    DROP CONSTRAINT fk_notificacion_tarjeta,
+    ADD CONSTRAINT fk_notificacion_tarjeta FOREIGN KEY (tarjeta_id) REFERENCES tarjeta(tarjeta_id) ON DELETE CASCADE;
+
