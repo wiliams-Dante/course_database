@@ -155,20 +155,15 @@ ALTER TABLE reporte_ingresos
     ADD CONSTRAINT chk_totales_reporte CHECK (total_ingresos >= 0 AND total_transacciones >= 0);
 
 
---habilitar delete: si borramos una tarjeta, se borra automaticamente su historial de bloqueps
+-- habilitar delete: si borramos una tarjeta, se borra automaticamente su historial de bloqueos
 ALTER TABLE bloqueo_tarjeta 
-    DROP CONSTRAINT fk_bloqueo_tarjeta_ref,
     ADD CONSTRAINT fk_bloqueo_tarjeta_ref FOREIGN KEY (tarjeta_id) REFERENCES tarjeta(tarjeta_id) ON DELETE CASCADE;
-
 
 -- ahora el mismo proceso para las notificaciones
 ALTER TABLE notificacion_pasajero 
-    DROP CONSTRAINT fk_notificacion_tarjeta,
     ADD CONSTRAINT fk_notificacion_tarjeta FOREIGN KEY (tarjeta_id) REFERENCES tarjeta(tarjeta_id) ON DELETE CASCADE;
 
-
---implementar que ruta sea nulo y si se borra, el bus no tiene ruta, pero no se borrara
+-- implementar que ruta sea nulo y si se borra, el bus no tiene ruta, pero no se borrara
 ALTER TABLE unidad ALTER COLUMN ruta_id DROP NOT NULL;
 ALTER TABLE unidad 
-    DROP CONSTRAINT fk_unidad_ruta,
     ADD CONSTRAINT fk_unidad_ruta FOREIGN KEY (ruta_id) REFERENCES ruta(ruta_id) ON DELETE SET NULL;
