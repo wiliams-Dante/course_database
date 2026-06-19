@@ -78,6 +78,47 @@ app.get('/api/transacciones/csv', async (req, res) => {
     }
 });
 
+//CRUD COMPLEJO
+app.post('/api/transacciones/pagar-pasaje', async (req, res) => {
+    const { transaccion_id, tarjeta_id, tarifa_id, pasajero_id } = req.body;
+    
+    try {
+        await pool.query('BEGIN');
+
+        const resTarifa = await pool.query('SELECT monto FROM tarifa WHERE tarifa_id = $1', [tarifa_id]);
+        if (resTarifa.rows.length === 0) throw new Error('Tarifa no encontrada');
+        const monto = resTarifa.rows[0].monto;
+
+        const resTarjeta = await pool.query('SELECT saldo_actual, estado_tarjeta FROM tarjeta WHERE tarjeta_id = $1 FOR UPDATE', [tarjeta_id]);
+        if (resTarjeta.rows.length === 0) throw new Error('Tarjeta no encontrada');
+        
+        const tarjeta = resTarjeta.rows[0];
+        if (tarjeta.estado_tarjeta !== 'Activa') throw new Error('La tarjeta no está activa');
+        if (tarjeta.saldo_actual < monto) throw new Error('Saldo insuficiente para el viaje');
+
+        const nuevoSaldo = tarjeta.saldo_actual - monto;
+        const nuevoEstado = nuevoSaldo === 0 ? 'Inactiva' : 'Activa';
+        
+        await pool.query(
+            'UPDATE tarjeta SET saldo_actual = $1, estado_tarjeta = $2 WHERE tarjeta_id = $3',
+            [nuevoSaldo, nuevoEstado, tarjeta_id]
+        );
+
+        await pool.query(
+            `INSERT INTO transaccion (transaccion_id, monto_tr, fecha_hora_tr, estado_tr, pasajero_id, tarjeta_id, tarifa_id) 
+             VALUES ($1, $2, NOW(), 'Completada', $3, $4, $5)`,
+            [transaccion_id, monto, pasajero_id, tarjeta_id, tarifa_id]
+        );
+
+        await pool.query('COMMIT');
+        res.status(201).json({ mensaje: 'Pasaje pagado con éxito', nuevoSaldo, estadoTarjeta: nuevoEstado });
+    } catch (err) {
+        await pool.query('ROLLBACK');
+        console.error(err.message);
+        res.status(400).send(`Error en la operación: ${err.message}`);
+    }
+});
+
 const PORT = 3000;
 app.listen(PORT, () => {
     console.log(`Servidor Backend corriendo en http://localhost:${PORT}`);
