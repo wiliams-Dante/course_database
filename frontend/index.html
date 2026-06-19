@@ -169,6 +169,47 @@
                 alert("Error conectando con el servidor. ¿Está encendido el backend?");
             }
         }
+
+        //funcion para consumir el CRUD complejo
+        async function pagarPasaje(event) {
+            event.preventDefault();
+            const transaccion_id = document.getElementById('pago_transaccion_id').value;
+            const tarjeta_id = document.getElementById('pago_tarjeta_id').value;
+            const tarifa_id = document.getElementById('pago_tarifa_id').value;
+            const pasajero_id = document.getElementById('pago_pasajero_id').value;
+
+            try {
+                const respuesta = await fetch('http://localhost:3000/api/transacciones/pagar-pasaje', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ transaccion_id, tarjeta_id, tarifa_id, pasajero_id })
+                });
+
+                // Convertimos la respuesta a texto primero, por si el backend tira un error en texto plano
+                let data;
+                const text = await respuesta.text();
+                try {
+                    data = JSON.parse(text);
+                } catch {
+                    data = text;
+                }
+
+                if (respuesta.ok) {
+                    alert(`¡Éxito! ${data.mensaje}. Nuevo saldo: S/${data.nuevoSaldo}. Estado: ${data.estadoTarjeta}`);
+                    document.getElementById('formPagarPasaje').reset();
+                } else {
+                    alert(data); // Mostrará el mensaje de error (ej: "Saldo insuficiente")
+                }
+            } catch (error) {
+                alert("Error en el servidor. Revisa tu backend.");
+                console.error(error);
+            }
+        }
+
+        // Función para descargar el reporte de agregaciones complejas
+        function descargarReporteComplejo() {
+            window.open(`http://localhost:3000/api/reportes/ingresos-tipo-usuario`, '_blank');
+        }
     </script>
 </body>
 </html>
