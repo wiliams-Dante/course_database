@@ -177,3 +177,6 @@ SELECT
     'TRJ00000000001',
     'TRF00000000001'
 FROM generate_series(6, 10005) as i;
+
+--borrare la data masiva anterior xd
+DELETE FROM transaccion WHERE transaccion_id LIKE 'TRN0000001%';
