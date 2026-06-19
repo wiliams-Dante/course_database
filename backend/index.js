@@ -119,6 +119,40 @@ app.post('/api/transacciones/pagar-pasaje', async (req, res) => {
     }
 });
 
+//reporte y exportacion
+app.get('/api/reportes/ingresos-tipo-usuario', async (req, res) => {
+    try {
+        const query = `
+            SELECT 
+                tu.nombre AS tipo_usuario,
+                COUNT(t.transaccion_id) AS total_viajes,
+                SUM(t.monto_tr) AS ingresos_totales
+            FROM transaccion t
+            JOIN tarjeta trj ON t.tarjeta_id = trj.tarjeta_id
+            JOIN tipo_usuario tu ON trj.tarjeta_id = tu.tarjeta_id
+            WHERE t.estado_tr = 'Completada'
+            GROUP BY tu.nombre
+            HAVING SUM(t.monto_tr) > 0
+            ORDER BY ingresos_totales DESC;
+        `;
+        
+        const result = await pool.query(query);
+        const reporte = result.rows;
+
+        if (reporte.length === 0) return res.status(404).send('No hay datos suficientes para el reporte.');
+
+        const json2csvParser = new Parser({ delimiter: ';', withBOM: true });
+        const csv = json2csvParser.parse(reporte);
+
+        res.header('Content-Type', 'text/csv');
+        res.attachment('Reporte_Ingresos_Por_Tipo_Usuario.csv');
+        return res.send(csv);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Error al generar el reporte complejo');
+    }
+});
+
 const PORT = 3000;
 app.listen(PORT, () => {
     console.log(`Servidor Backend corriendo en http://localhost:${PORT}`);
