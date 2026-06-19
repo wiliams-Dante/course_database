@@ -141,6 +141,16 @@ ALTER TABLE unidad
     ADD CONSTRAINT chk_capacidad CHECK (capacidad_psjros > 0 AND capacidad_psjros <= 100),
     ADD CONSTRAINT chk_estado_unidad CHECK (estado_operativo IN ('Operativo', 'Mantenimiento', 'Inactivo'));
 
+
 ALTER TABLE transaccion 
     ADD CONSTRAINT chk_monto_tr CHECK (monto_tr > 0),
     ADD CONSTRAINT chk_estado_tr CHECK (estado_tr IN ('Completada', 'Rechazada', 'Anulada'));
+
+
+ALTER TABLE tipo_usuario 
+    ADD CONSTRAINT chk_descuento CHECK (descuento_porcentaje >= 0 AND descuento_porcentaje <= 100);
+
+
+
+ALTER TABLE reporte_ingresos
+    ADD CONSTRAINT chk_totales_reporte CHECK (total_ingresos >= 0 AND total_transacciones >= 0);
