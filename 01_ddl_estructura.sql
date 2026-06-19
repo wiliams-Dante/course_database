@@ -131,3 +131,7 @@ CREATE TABLE historial_cambio_tarjeta (
 
 ALTER TABLE empresa
 	ADD CONSTRAINT uk_nombre_empresa UNIQUE (nombre_empresa);
+
+
+ALTER TABLE ruta 
+    ADD CONSTRAINT uk_nombre_ruta UNIQUE (nombre_ruta);
