@@ -135,3 +135,8 @@ ALTER TABLE empresa
 
 ALTER TABLE ruta 
     ADD CONSTRAINT uk_nombre_ruta UNIQUE (nombre_ruta);
+
+
+ALTER TABLE unidad 
+    ADD CONSTRAINT chk_capacidad CHECK (capacidad_psjros > 0 AND capacidad_psjros <= 100),
+    ADD CONSTRAINT chk_estado_unidad CHECK (estado_operativo IN ('Operativo', 'Mantenimiento', 'Inactivo'));
