@@ -151,6 +151,11 @@ ALTER TABLE tipo_usuario
     ADD CONSTRAINT chk_descuento CHECK (descuento_porcentaje >= 0 AND descuento_porcentaje <= 100);
 
 
-
 ALTER TABLE reporte_ingresos
     ADD CONSTRAINT chk_totales_reporte CHECK (total_ingresos >= 0 AND total_transacciones >= 0);
+
+
+--habilitar delete: si borramos una tarjeta, se borra automaticamente su historial de bloqueps
+ALTER TABLE bloqueo_tarjeta 
+    DROP CONSTRAINT fk_bloqueo_tarjeta_ref,
+    ADD CONSTRAINT fk_bloqueo_tarjeta_ref FOREIGN KEY (tarjeta_id) REFERENCES tarjeta(tarjeta_id) ON DELETE CASCADE;
