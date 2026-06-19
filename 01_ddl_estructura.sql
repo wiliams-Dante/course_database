@@ -128,3 +128,7 @@ CREATE TABLE historial_cambio_tarjeta (
     motivo_cambio VARCHAR(500) NOT NULL,
     tarjeta_id CHAR(14) NOT NULL
 );
+
+
+ALTER TABLE empresa
+	ADD CONSTRAINT uk_nombre_empresa UNIQUE (nombre_empresa);
