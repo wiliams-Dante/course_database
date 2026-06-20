@@ -41,3 +41,19 @@ SELECT
     'TRJ' || LPAD((100 + (i % 14900))::text, 11, '0'),
     'TRF' || LPAD((100 + (i % 14900))::text, 11, '0')
 FROM generate_series(100, 20000) AS i;
+
+
+--primer explain analyze
+EXPLAIN ANALYZE
+SELECT transaccion_id, monto_tr, fecha_hora_tr, estado_tr 
+FROM transaccion
+WHERE fecha_hora_tr BETWEEN '2026-01-01 00:00:00' AND '2026-01-05 23:59:59';
+
+--creamos el indice
+CREATE INDEX idx_transaccion_fecha ON transaccion(fecha_hora_tr);
+
+--realizamos otro explain analyze para ver si en verdad se optimizo 
+EXPLAIN ANALYZE
+SELECT transaccion_id, monto_tr, fecha_hora_tr, estado_tr 
+FROM transaccion
+WHERE fecha_hora_tr BETWEEN '2026-01-01 00:00:00' AND '2026-01-05 23:59:59';
