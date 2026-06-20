@@ -180,3 +180,11 @@ FROM generate_series(6, 10005) as i;
 
 --borrare la data masiva anterior xd
 DELETE FROM transaccion WHERE transaccion_id LIKE 'TRN0000001%';
+
+--insertare 10k de pasajeros nuevos
+INSERT INTO pasajero (pasajero_id, dni_pasajero, telefono_pasajero)
+SELECT 
+    'PSJ' || LPAD(i::text, 11, '0'),
+    LPAD(i::text, 8, '0'), --generanding dnis unicos
+    '9' || LPAD(i::text, 8, '0')
+FROM generate_series(6, 10005) as i;
