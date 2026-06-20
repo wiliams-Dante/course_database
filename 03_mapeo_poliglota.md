@@ -29,16 +29,20 @@ JOIN tarjeta t ON p.pasajero_id = t.pasajero_id
 LEFT JOIN tipo_usuario tu ON t.tarjeta_id = tu.tarjeta_id
 LEFT JOIN transaccion tr ON t.tarjeta_id = tr.tarjeta_id
 WHERE p.pasajero_id = 'PSJ00000000001';
-2. Diseño NoSQL (Estructura de Documento Unificado)
+```
+---
+
+ ## 2. Diseño NoSQL (Estructura de Documento Unificado)
 Para optimizar las lecturas y evitar múltiples uniones en tiempo de ejecución, transformamos la relación en un esquema híbrido/documental. Toda la información dependiente se anida dentro del documento raíz del pasajero.
 
 A continuación, se muestra cómo se estructura la misma información unificada dentro de un único documento JSON/JSONB:
 
+```
 JSON
 {
   "pasajero_id": "PSJ00000000001",
   "dni_pasajero": "60062056",
-  "telefono_pasajero": "983104472",
+  "telefono_pasajero": "987654321",
   "tarjetas": [
     {
       "tarjeta_id": "TRJ00000000001",
@@ -60,12 +64,17 @@ JSON
     }
   ]
 }
-3. Consulta de Filtrado sobre Propiedades Internas (PostgreSQL JSONB)
+
+```
+
+---
+ ## 3. Consulta de Filtrado sobre Propiedades Internas (PostgreSQL JSONB)
 Asumiendo que almacenamos estos documentos en una tabla relacional híbrida llamada pasajero_documental dentro de una columna de tipo JSONB llamada datos, podemos consumir las propiedades internas de la siguiente manera.
 
 Esta consulta filtra y devuelve los datos de los pasajeros que poseen tarjetas asociadas al tipo de usuario "Universitario":
 
 SQL
+```
 -- Usando el operador de contención (@>) eficiente para índices GIN en PostgreSQL
 SELECT 
     datos->>'pasajero_id' AS id,
@@ -73,7 +82,11 @@ SELECT
     datos->>'telefono_pasajero' AS telefono
 FROM pasajero_documental
 WHERE datos @> '{"tarjetas": [{"tipo_usuario": {"nombre": "Universitario"}}]}';
-4. Sustento Técnico: Flexibilidad Documental vs. JOINs Tradicionales
+```
+
+--- 
+
+## 4. Sustento Técnico: Flexibilidad Documental vs. JOINs Tradicionales
 El uso de un enfoque documental (o columnas JSONB) supera al modelo relacional tradicional en este escenario por las siguientes razones:
 
 Rendimiento Crítico en Tiempo Real: En el transporte masivo, un validador de bus necesita autorizar el acceso en milisegundos. Realizar tres JOINs en una base de datos con millones de registros cada vez que un pasajero pasa su tarjeta genera una carga de procesamiento innecesaria. Leer un único documento unificado es directo y mucho más rápido para el motor de base de datos.
