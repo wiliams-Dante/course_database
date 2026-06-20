@@ -165,26 +165,3 @@ ALTER TABLE reporte_ingresos
 ALTER TABLE reporte_ingresos 
     ADD CONSTRAINT fk_reporte_tarifa FOREIGN KEY (tarifa_id) REFERENCES tarifa(tarifa_id);
 
---insercion masiva para pruebas de indexacion
--- Insertar 10,000 transacciones aleatorias
-INSERT INTO transaccion (transaccion_id, monto_tr, fecha_hora_tr, estado_tr, pasajero_id, tarjeta_id, tarifa_id)
-SELECT 
-    'TRN' || LPAD(i::text, 11, '0'), --generaamos ids desde TRN00000000006 hasta TRN00000010005
-    floor(random() * 5 + 1)::INT,    --montos aleatorios entre 1 a 5 soles 
-    NOW() - (random() * 365 || ' days')::interval, --fecha aleatoria en el ultimo año 
-    'Completada',
-    'PSJ00000000001',
-    'TRJ00000000001',
-    'TRF00000000001'
-FROM generate_series(6, 10005) as i;
-
---borrare la data masiva anterior xd
-DELETE FROM transaccion WHERE transaccion_id LIKE 'TRN0000001%';
-
---insertare 10k de pasajeros nuevos
-INSERT INTO pasajero (pasajero_id, dni_pasajero, telefono_pasajero)
-SELECT 
-    'PSJ' || LPAD(i::text, 11, '0'),
-    LPAD(i::text, 8, '0'), --generanding dnis unicos
-    '9' || LPAD(i::text, 8, '0')
-FROM generate_series(6, 10005) as i;
