@@ -1,6 +1,19 @@
+
+--pasajeros
 INSERT INTO pasajero (pasajero_id, dni_pasajero, telefono_pasajero)
 SELECT 
     'PSJ' || LPAD(i::text, 11, '0'),
     LPAD((10000000 + i)::text, 8, '0'), 
     '9' || LPAD((10000000 + i)::text, 8, '0')
+FROM generate_series(100, 15000) AS i;
+
+--tarjetas (una porpasajero)
+INSERT INTO tarjeta (tarjeta_id, fecha_emision, fecha_caducidad, saldo_actual, estado_tarjeta, pasajero_id)
+SELECT 
+    'TRJ' || LPAD(i::text, 11, '0'),
+    NOW() - (random() * 365 || ' days')::interval,
+    NOW() + (random() * 365 || ' days')::interval,
+    floor(random() * 100)::INT,
+    CASE WHEN random() > 0.05 THEN 'Activa' ELSE 'Bloqueada' END,
+    'PSJ' || LPAD(i::text, 11, '0')
 FROM generate_series(100, 15000) AS i;
