@@ -17,3 +17,12 @@ SELECT
     CASE WHEN random() > 0.05 THEN 'Activa' ELSE 'Bloqueada' END,
     'PSJ' || LPAD(i::text, 11, '0')
 FROM generate_series(100, 15000) AS i;
+
+--tarifas
+INSERT INTO tarifa (tarifa_id, monto, pasajero_id, tarjeta_id)
+SELECT 
+    'TRF' || LPAD(i::text, 11, '0'),
+    floor(random() * 5 + 1)::INT,
+    'PSJ' || LPAD(i::text, 11, '0'),
+    'TRJ' || LPAD(i::text, 11, '0')
+FROM generate_series(100, 15000) AS i;
