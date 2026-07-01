@@ -167,3 +167,73 @@ ALTER TABLE notificacion_pasajero
 ALTER TABLE unidad ALTER COLUMN ruta_id DROP NOT NULL;
 ALTER TABLE unidad 
     ADD CONSTRAINT fk_unidad_ruta FOREIGN KEY (ruta_id) REFERENCES ruta(ruta_id) ON DELETE SET NULL;
+
+	-- Reparando tamaños de RUC para que todos sean CHAR(20)
+ALTER TABLE empresa ALTER COLUMN ruc TYPE CHAR(20);
+ALTER TABLE ruta ALTER COLUMN empresa_ruc TYPE CHAR(20);
+ALTER TABLE unidad ALTER COLUMN empresa_ruc TYPE CHAR(20);
+ALTER TABLE reporte_ingresos ALTER COLUMN empresa_ruc TYPE CHAR(20);
+
+/* Reparando el tipo de dato de pasajero_id en la tabla tarjeta*/
+ALTER TABLE tarjeta ALTER COLUMN pasajero_id TYPE CHAR(14);
+
+/* Conectar RUTA con EMPRESA*/
+ALTER TABLE ruta 
+    ADD CONSTRAINT fk_ruta_empresa FOREIGN KEY (empresa_ruc) REFERENCES empresa(ruc);
+
+/*Conectar UNIDAD con EMPRESA, RUTA y CHOFER*/
+ALTER TABLE unidad 
+    ADD CONSTRAINT fk_unidad_empresa FOREIGN KEY (empresa_ruc) REFERENCES empresa(ruc);
+
+ALTER TABLE unidad 
+    ADD CONSTRAINT fk_unidad_ruta FOREIGN KEY (ruta_id) REFERENCES ruta(ruta_id);
+
+ALTER TABLE unidad 
+    ADD CONSTRAINT fk_unidad_chofer FOREIGN KEY (chofer_id) REFERENCES chofer(chofer_id);
+
+/*Conectar TARJETA con PASAJERO*/
+ALTER TABLE tarjeta 
+    ADD CONSTRAINT fk_tarjeta_pasajero FOREIGN KEY (pasajero_id) REFERENCES pasajero(pasajero_id);
+
+/*Conectar los subtipos y estados a la TARJETA*/
+ALTER TABLE tipo_tarjeta 
+    ADD CONSTRAINT fk_tipo_tarjeta_ref FOREIGN KEY (tarjeta_id) REFERENCES tarjeta(tarjeta_id);
+
+ALTER TABLE tipo_usuario 
+    ADD CONSTRAINT fk_tipo_usuario_ref FOREIGN KEY (tarjeta_id) REFERENCES tarjeta(tarjeta_id);
+
+ALTER TABLE bloqueo_tarjeta 
+    ADD CONSTRAINT fk_bloqueo_tarjeta_ref FOREIGN KEY (tarjeta_id) REFERENCES tarjeta(tarjeta_id);
+
+ALTER TABLE notificacion_pasajero 
+    ADD CONSTRAINT fk_notificacion_tarjeta FOREIGN KEY (tarjeta_id) REFERENCES tarjeta(tarjeta_id);
+
+ALTER TABLE historial_cambio_tarjeta 
+    ADD CONSTRAINT fk_historial_tarjeta FOREIGN KEY (tarjeta_id) REFERENCES tarjeta(tarjeta_id);
+
+ALTER TABLE incidencia 
+    ADD CONSTRAINT fk_incidencia_tarjeta FOREIGN KEY (tarjeta_id) REFERENCES tarjeta(tarjeta_id);
+
+/*Conectar TARIFA con PASAJERO y TARJETA*/
+ALTER TABLE tarifa 
+    ADD CONSTRAINT fk_tarifa_pasajero FOREIGN KEY (pasajero_id) REFERENCES pasajero(pasajero_id);
+
+ALTER TABLE tarifa 
+    ADD CONSTRAINT fk_tarifa_tarjeta FOREIGN KEY (tarjeta_id) REFERENCES tarjeta(tarjeta_id);
+
+/*Conectar TRANSACCION con sus tres entidades originarias*/
+ALTER TABLE transaccion 
+    ADD CONSTRAINT fk_transaccion_pasajero FOREIGN KEY (pasajero_id) REFERENCES pasajero(pasajero_id);
+
+ALTER TABLE transaccion 
+    ADD CONSTRAINT fk_transaccion_tarjeta FOREIGN KEY (tarjeta_id) REFERENCES tarjeta(tarjeta_id);
+
+ALTER TABLE transaccion 
+    ADD CONSTRAINT fk_transaccion_tarifa FOREIGN KEY (tarifa_id) REFERENCES tarifa(tarifa_id);
+
+/*Conectar REPORTE DE INGRESOS con la EMPRESA y la TARIFA analizada*/
+ALTER TABLE reporte_ingresos 
+    ADD CONSTRAINT fk_reporte_empresa FOREIGN KEY (empresa_ruc) REFERENCES empresa(ruc);
+
+ALTER TABLE reporte_ingresos 
+    ADD CONSTRAINT fk_reporte_tarifa FOREIGN KEY (tarifa_id) REFERENCES tarifa(tarifa_id);
