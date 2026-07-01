@@ -52,7 +52,7 @@ app.get('/api/transacciones/csv/:pasajero_id', async (req, res) => {
 
         const json2csvParser = new Parser({ delimiter: ';', withBOM: true });
         res.header('Content-Type', 'text/csv');
-        res.attachment(`reporte_transacciones_${pasajero_id}.csv`);
+        res.attachment(`reporte_transacciones_${pasajero_id}.csv`); //obliga al navegador a descargar 
         return res.send(json2csvParser.parse(transacciones));
     } catch (err) {
         console.error(err.message);
@@ -78,7 +78,7 @@ app.get('/api/transacciones/csv', async (req, res) => {
     }
 });
 
-//CRUD COMPLEJO
+//CRUD COMPLEJO -- transaccion
 app.post('/api/transacciones/pagar-pasaje', async (req, res) => {
     const { transaccion_id, tarjeta_id, tarifa_id, pasajero_id } = req.body;
     
@@ -99,6 +99,7 @@ app.post('/api/transacciones/pagar-pasaje', async (req, res) => {
         const nuevoSaldo = tarjeta.saldo_actual - monto;
         const nuevoEstado = nuevoSaldo === 0 ? 'Inactiva' : 'Activa';
         
+        //calcular nuevo saldo
         await pool.query(
             'UPDATE tarjeta SET saldo_actual = $1, estado_tarjeta = $2 WHERE tarjeta_id = $3',
             [nuevoSaldo, nuevoEstado, tarjeta_id]
@@ -112,17 +113,20 @@ app.post('/api/transacciones/pagar-pasaje', async (req, res) => {
 
         await pool.query('COMMIT');
         res.status(201).json({ mensaje: 'Pasaje pagado con éxito', nuevoSaldo, estadoTarjeta: nuevoEstado });
-    } catch (err) {
+    } 
+    catch (err) 
+    { //si no hay saldo en el usuario
         await pool.query('ROLLBACK');
         console.error(err.message);
         res.status(400).send(`Error en la operación: ${err.message}`);
     }
 });
 
-//reporte y exportacion
+//reporte y exportacion con group by y having
 app.get('/api/reportes/ingresos-tipo-usuario', async (req, res) => {
     try {
-        const query = `
+        //ejecucucion de una consulta para mostrar 
+        const query = ` 
             SELECT 
                 tu.nombre AS tipo_usuario,
                 COUNT(t.transaccion_id) AS total_viajes,
@@ -136,17 +140,18 @@ app.get('/api/reportes/ingresos-tipo-usuario', async (req, res) => {
             ORDER BY ingresos_totales DESC;
         `;
         
-        const result = await pool.query(query);
+        const result = await pool.query(query); //ejecucion y validacion 
         const reporte = result.rows;
 
-        if (reporte.length === 0) return res.status(404).send('No hay datos suficientes para el reporte.');
+        if (reporte.length === 0) return res.status(404).send('No hay datos suficientes para el reporte.'); //seguro por si no hay datos
 
         const json2csvParser = new Parser({ delimiter: ';', withBOM: true });
         const csv = json2csvParser.parse(reporte);
 
+        //descarga automatica
         res.header('Content-Type', 'text/csv');
-        res.attachment('Reporte_Ingresos_Por_Tipo_Usuario.csv');
-        return res.send(csv);
+        res.attachment('Reporte_Ingresos_Por_Tipo_Usuario.csv');    //descarga el archivo como...
+        return res.send(csv);   //guarda el archivo en la pc
     } catch (err) {
         console.error(err.message);
         res.status(500).send('Error al generar el reporte complejo');
@@ -156,4 +161,45 @@ app.get('/api/reportes/ingresos-tipo-usuario', async (req, res) => {
 const PORT = 3000;
 app.listen(PORT, () => {
     console.log(`Servidor Backend corriendo en http://localhost:${PORT}`);
+});
+
+// Editar un pasajero (Update)
+app.put('/api/pasajeros/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { dni, telefono } = req.body;
+        
+        const result = await pool.query(
+            'UPDATE pasajero SET dni_pasajero = $1, telefono_pasajero = $2 WHERE pasajero_id = $3 RETURNING *',
+            [dni, telefono, id]
+        );
+
+        if (result.rowCount === 0) {
+            return res.status(404).send('Pasajero no encontrado');
+        }
+        res.json({ mensaje: 'Pasajero actualizado con éxito', pasajero: result.rows[0] });
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Error al actualizar el pasajero');
+    }
+});
+
+// Eliminar un pasajero (Delete)
+app.delete('/api/pasajeros/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        
+        const result = await pool.query(
+            'DELETE FROM pasajero WHERE pasajero_id = $1 RETURNING *',
+            [id]
+        );
+
+        if (result.rowCount === 0) {
+            return res.status(404).send('Pasajero no encontrado');
+        }
+        res.json({ mensaje: 'Pasajero eliminado con éxito' });
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Error al eliminar el pasajero. Verifica si tiene tarjetas asociadas.');
+    }
 });

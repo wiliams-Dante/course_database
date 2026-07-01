@@ -21,7 +21,7 @@
         .header h1 { font-size: 28px; color: var(--text-main); letter-spacing: -0.5px; }
         .header p { color: var(--text-muted); font-size: 15px; margin-top: 5px; }
 
-        .card { background: var(--card-bg); border-radius: 12px; padding: 24px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); border: 1px solid #e2e8f0; }
+        .card { background: var(--card-bg ); border-radius: 12px; padding: 24px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); border: 1px solid #e2e8f0; }
         .card h3 { font-size: 18px; margin-bottom: 16px; color: var(--text-main); display: flex; align-items: center; gap: 8px; }
         
         .form-group { margin-bottom: 16px; }
@@ -98,6 +98,7 @@
                             <th>ID Pasajero</th>
                             <th>DNI</th>
                             <th>Teléfono</th>
+                            <th style="text-align: center;">Acciones</th> </tr>
                         </tr>
                     </thead>
                     <tbody id="datos-body">
@@ -134,12 +135,75 @@
                 
                 pasajeros.forEach(p => {
                     const fila = document.createElement('tr');
-                    fila.innerHTML = `<td>${p.pasajero_id}</td><td>${p.dni_pasajero}</td><td>${p.telefono_pasajero}</td>`;
+                    // Agregamos las columnas y los botones de acción dinámicos
+                    fila.innerHTML = `
+                        <td>${p.pasajero_id}</td>
+                        <td>${p.dni_pasajero}</td>
+                        <td>${p.telefono_pasajero}</td>
+                        <td style="text-align: center;">
+                            <button class="btn btn-primary" style="padding: 6px 12px; font-size: 12px; margin-right: 5px;" 
+                                onclick="editarPasajero('${p.pasajero_id}', '${p.dni_pasajero}', '${p.telefono_pasajero}')">
+                                Editar
+                            </button>
+                            <button class="btn" style="background-color: #ef4444; color: white; padding: 6px 12px; font-size: 12px;" 
+                                onclick="eliminarPasajero('${p.pasajero_id}')">
+                                Eliminar
+                            </button>
+                        </td>
+                    `;
                     tbody.appendChild(fila);
                 });
             } catch (error) {
                 alert('Error conectando con la BD.');
                 console.error(error);
+            }
+        }
+
+        //funcion editar pasajero
+        async function editarPasajero(id, dniActual, telefonoActual) {
+            // Pedimos los nuevos datos mediante pop-ups rápidos
+            const nuevoDni = prompt(`Editando pasajero ${id}\nIngresa el nuevo DNI:`, dniActual);
+            if (nuevoDni === null) return; // Si el usuario cancela
+            
+            const nuevoTelefono = prompt(`Ingresa el nuevo Teléfono:`, telefonoActual);
+            if (nuevoTelefono === null) return;
+
+            try {
+                const respuesta = await fetch(`http://localhost:3000/api/pasajeros/${id}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ dni: nuevoDni, telefono: nuevoTelefono })
+                });
+
+                if (respuesta.ok) {
+                    alert("¡Pasajero actualizado con éxito!");
+                    cargarPasajeros(); // Recargamos la tabla para ver el cambio
+                } else {
+                    alert("Error al actualizar. Revisa los datos.");
+                }
+            } catch (error) {
+                alert("Error de conexión con el servidor.");
+            }
+        }
+
+        //funcion para eliminar pasajero
+        async function eliminarPasajero(id) {
+            const confirmacion = confirm(`¿Estás seguro de que deseas eliminar al pasajero ${id}?`);
+            if (!confirmacion) return;
+
+            try {
+                const respuesta = await fetch(`http://localhost:3000/api/pasajeros/${id}`, {
+                    method: 'DELETE'
+                });
+
+                if (respuesta.ok) {
+                    alert("¡Pasajero eliminado de la base de datos!");
+                    cargarPasajeros(); // Recargamos la tabla
+                } else {
+                    alert("No se puede eliminar. Es probable que este pasajero tenga tarjetas vinculadas (Restricción de llave foránea).");
+                }
+            } catch (error) {
+                alert("Error de conexión con el servidor.");
             }
         }
 
